@@ -1,0 +1,239 @@
+<!-- main navbar -->
+<div>
+    <mat-toolbar class="co" color="primary">
+ 
+      &nbsp;
+      <button mat-icon-button class="example-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+        aria-controls="offcanvasWithBothOptions" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+     
+     
+    </mat-toolbar>
+  </div>
+  <!-- side navbar  -->
+  <div style="background-color: #fce4ec;" class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1"
+    id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <!-- <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Admin</h5><br> -->
+      <h4>Departments Details</h4> 
+      <!-- <p>Mechanical</p><br>
+      <p>Civil</p><br>
+      <p>Electronics</p><br>
+      <p>Computer Science</p><br> -->
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      
+    </div>
+  </div>
+  <button (click)="logout()" class="btn btn-danger" >logout</button>
+  
+  <!-- button for view students -->
+  <section>
+    <div class="example-button-row">
+      <button (click)="showTable()" mat-raised-button color="primary">View Students</button>
+    </div>
+  </section>
+  <!-- <mat-divider></mat-divider> -->
+  
+  <!-- button for timetable -->
+  <section style="margin-left: 1000px;">
+    <div class="example-button-row">
+      <button  data-bs-toggle="modal" data-bs-target="#exampleModal1"  mat-raised-button color="primary">Update Time Table</button>
+    </div>
+  </section>
+
+
+  <!-- <mat-divider></mat-divider> -->
+  <!--  student details table  -->
+  <div *ngIf="show" style="margin-top: 50px;width: 800px;" class="container">
+    <table class="table table-hover">
+      <thead>
+        <tr class="table-dark">
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Details</th>
+          <th scope="col">Edit Student Details </th>
+          <th scope="col">Delete Student Details</th>
+
+     
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let std of data;">
+        <tr >
+          <td style="text-align:left;">{{std.id}}</td>
+          <td style="text-align: left;">{{std.userNameR}}</td>
+
+          <td><button type="button" class="btaction" (click)="selectedStudent(std.id)">View Full Student Details</button></td>
+
+          <td style="text-align: center;"><button type="button" (click)="editDetail()">Edit</button></td>
+          <td style="text-align: center;"><button type="button" (click)="deleteDetail(std.id)">Delete</button></td>
+
+         <tr *ngIf="selected">
+         
+         
+          <th scope="col">email:</th>
+          <td>{{std.emailIdR}}</td>
+          <th>PassWord:</th>
+          <td>{{std.passwordR}}</td>
+          <th scope="col">User Type:</th>
+          <td>{{std.role}}</td>
+         </tr>
+
+          <!-- <ng-container *ngIf="selectedStudent === i"> -->
+           
+            <!-- </tr> -->
+          <!-- </ng-container> -->
+          <!-- <td>{{std.emailIdR}}</td> -->
+          <!-- <td>{{std.role}}</td> -->
+          <!-- <td>
+            <button data-bs-toggle="modal" (click)="viewStudent(std)" data-bs-target="#exampleModal" mat-raised-button
+              color="primary">View Details</button>
+          </td> -->
+        
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <!-- edit form  
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Student Details</h3>
+          <button type="button" id="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="edidForm" style="margin-top: 30px;">
+            <div class="mb-3">
+              <div class="mb-3">
+                <label for="" class="form-label">Name</label>
+                <input type="text" class="form-control" [(ngModel)]="obje.userNameR" formControlName="userNameR" name="userNameR" id="exampleInputPassword1">
+              </div>
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" class="form-control" [(ngModel)]="obje.emailIdR" formControlName="emailIdR"
+                name="emailIdR" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">Role</label>
+              <input type="text" class="form-control" [(ngModel)]="obje.role" formControlName="role" name="role"
+                placeholder="Teacher/student">
+            </div>
+            <button type="submit"  (click)="updateProduct()" class="btn btn-primary">update</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <h4>“Teachers can open the door, but you must enter it yourself.”</h4> 
+        </div>
+      </div>
+    </div>
+  </div>
+  
+   
+   -->
+  <!--  student table -->
+  <!-- <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"> -->
+    <div id="stdTable" class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel" style="text-align: center;">Student Time-table</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body"> 
+            <form [formGroup]="submitTimetable"  (ngSubmit)="submit()" >
+            <table border="2px">
+              <tr >
+                <th>Day</th>
+                <th>10:00 AM - 11:00 AM</th>
+                <th>11:00 AM - 12:00 AM</th>
+                
+                <th> Break</th>
+                <th>1:00 AM - 2:00 AM</th>
+                <th>2:00 AM - 3:00 AM</th>
+              </tr>
+              <tr>
+                <th>Monday</th>
+                <td><input formControlName="firstrow1"  name="firstrow1" id="inp" type="text"></td>
+                <td><input formControlName="secondRow1" name="secondRow1"  id="inp" type="text"></td>
+                <td> </td>
+                <td><input  formControlName="thirdRow1" name="thirdRow1"  id="inp" type="text"></td>
+                <td><input formControlName="fourthRow1" name="fourthRow1"  id="inp" type="text"></td>
+              </tr>&nbsp;
+              <tr>
+                <th>Tuesday</th>
+                <td><input formControlName="firstrow1"  name="firstrow1" id="inp" type="text"></td>
+                <td><input formControlName="secondRow1" name="secondRow1"  id="inp" type="text"></td>
+                <td> </td>
+                <td><input  formControlName="thirdRow1" name="thirdRow1"  id="inp" type="text"></td>
+                <td><input formControlName="fourthRow1" name="fourthRow1"  id="inp" type="text"></td>
+              </tr>
+              <tr>
+                <th>Wednesday</th>
+                <td><input formControlName="firstrow2" name="firstrow2"  id="inp" type="text"></td>
+                <td><input formControlName="secondRow2" name="secondRow2"  id="inp" type="text"></td>
+                <th>12:00 PM - 1:00 PM</th>
+                <td><input formControlName="thirdRow2" name="thirdRow2"  id="inp" type="text"></td>
+                <td><input formControlName="fourthRow2" name="fourthRow2"  id="inp" type="text"></td>
+              </tr>
+              <tr>
+                <th>Thrusday</th>
+                <td><input formControlName="firstrow1"  name="firstrow1" id="inp" type="text"></td>
+                <td><input formControlName="secondRow1" name="secondRow1"  id="inp" type="text"></td>
+                <td> </td>
+                <td><input  formControlName="thirdRow1" name="thirdRow1"  id="inp" type="text"></td>
+                <td><input formControlName="fourthRow1" name="fourthRow1"  id="inp" type="text"></td>
+              </tr>&nbsp;
+              <tr>
+                <th>Friday</th>
+                <td><input formControlName="firstrow1"  name="firstrow1" id="inp" type="text"></td>
+                <td><input formControlName="secondRow1" name="secondRow1"  id="inp" type="text"></td>
+                <td> </td>
+                <td><input  formControlName="thirdRow1" name="thirdRow1"  id="inp" type="text"></td>
+                <td><input formControlName="fourthRow1" name="fourthRow1"  id="inp" type="text"></td>
+              </tr>&nbsp;
+              <tr>
+                <th>Saturday</th>
+                <td><input formControlName="firstrow2" name="firstrow2" id="inp" type="text"></td>
+                <td><input formControlName="secondRow3" name="secondRow"  id="inp" type="text"></td>
+                <td></td>
+                <td><input formControlName="thirdRow3" name="thirdRow3"  id="inp" type="text"></td>
+                <td><input formControlName="fourthRow1" name="fourthRow3"  id="inp" type="text"></td>
+              </tr>
+            </table>
+            <button type="submit" (click)="update(submitTimetable)" class="btn btn-primary">Save changes</button>
+          </form>
+          </div> 
+        </div>
+      </div>
+    </div>
+    
+ <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+  <div class="carousel-inner"  data-bs-interval="500">
+
+
+    <!-- <div class="carousel-item active slides">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS490qIxhsjcZ_Tbix_YJdsRGZEzZACS6fy7LlO9Jrfliyr8XaIH7V4tqu72cfB63BdqQs&usqp=CAU" class="d-block w-100" alt="...">
+      
+    </div> -->
+
+
+
+    <!-- <div class="carousel-item mx-auto">
+      <img src="https://www.dps-hisar.in/images/staff.JPG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.dps.ac.in/images/cover%20page%201.JPG" class="d-block w-100" alt="...">
+    </div>
+  </div> -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="false"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+  <!-- </div> -->
